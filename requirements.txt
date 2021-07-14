@@ -1,0 +1,8 @@
+django==3.2.3
+flake8
+isort
+pillow==7.0.0
+djangorestframework==3.11.0
+djangorestframework-simplejwt==4.3.0
+sorl-thumbnail==12.6.3
+django-environ

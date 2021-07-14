@@ -1,0 +1,51 @@
+<div class="card" data-id="{{ recipe.id }}">
+    {% load thumbnail %}
+    {% load recipe_filters %}
+    {% thumbnail recipe.image "364x240" crop="center" upscale=True as im %}
+        <img src="{{ im.url }}" alt="Какой-то текст" class="card__image">
+    {% endthumbnail %}
+    <div class="card__body">
+        <a class="card__title link"
+            href="{% url 'recipe' username=recipe.author.username recipe_id=recipe.id %}"
+            target="_blank">{{ recipe.title }}
+        </a>
+        <ul class="card__items">
+        {% for tag in recipe.tags.all %}
+            <li class="card__item">
+                <span class="badge badge_style_{{ tag.color }}">
+                    {{ tag.display_name }}
+                </span>
+            </li>
+        {% endfor %}
+        </ul>
+        <div class="card__items card__items_column">
+            <p class="card__text">
+                <span class="icon-time"></span>
+                {{ recipe.cooking_time }}
+            </p>
+            <p class="card__text">
+                <span class="icon-user"></span>
+                <a href="{% url 'profile' username=recipe.author.username %}"
+                    style="color: black">{{ recipe.author }}
+                </a>
+            </p>
+        </div>
+    </div>
+    <div class="card__footer">
+        <button class="button button_style_light-blue" name="purchases" data-out>
+            <span class="icon-plus button__icon"></span>
+            Добавить в покупки
+        </button>
+        {% if user.is_authenticated %}
+            {% if recipe|favorite_by_user:user %}
+                <button class="button button_style_none" name="favorites">
+                    <span class="icon-favorite icon-favorite_active"></span>
+                </button>
+            {% else %}
+                <button class="button button_style_none" name="favorites" data-out>
+                    <span class="icon-favorite"></span>
+                </button>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
