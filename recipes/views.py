@@ -5,42 +5,40 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import RecipeForm
-from .models import Follow, Ingredient, Recipe, RecipeIngredient, Tag, User
-from .utils import create_pdf, get_ingredients, get_ingredients_from_shoplist
+from .models import Follow, Ingredient, Recipe, RecipeIngredient, User
+from .utils import (
+    create_pdf, get_active_tags, get_ingredients, get_ingredients_from_shoplist
+)
 
 
 def index(request):
-    tags = Tag.objects.all()
-    active_tags = request.GET.getlist('tags')
-    if not active_tags:
-        active_tags = [tag.slug for tag in Tag.objects.all()]
-    list = Recipe.objects.filter(tags__slug__in=active_tags). \
-        select_related('author').prefetch_related('tags').distinct()
+    active_tags = get_active_tags(request)
+    list = Recipe.objects.filter(
+        tags__slug__in=active_tags
+    ).select_related('author').prefetch_related('tags').distinct()
     paginator = Paginator(list, settings.RECIPES_PER_PAGE)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     return render(
         request,
         'index.html',
-        {'page': page, 'paginator': paginator, 'tags': tags}
+        {'page': page, 'paginator': paginator}
     )
 
 
 def profile(request, username):
     author = get_object_or_404(User, username=username)
-    tags = Tag.objects.all()
-    active_tags = request.GET.getlist('tags')
-    if not active_tags:
-        active_tags = [tag.slug for tag in Tag.objects.all()]
-    list = Recipe.objects.filter(tags__slug__in=active_tags, author=author). \
-        select_related('author').prefetch_related('tags').distinct()
+    active_tags = get_active_tags(request)
+    list = Recipe.objects.filter(
+        tags__slug__in=active_tags, author=author
+    ).select_related('author').prefetch_related('tags').distinct()
     paginator = Paginator(list, settings.RECIPES_PER_PAGE)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     return render(
         request,
         'index.html',
-        {'page': page, 'paginator': paginator, 'tags': tags, 'author': author}
+        {'page': page, 'paginator': paginator, 'author': author}
     )
 
 
@@ -118,10 +116,7 @@ def recipe_page(request, username, recipe_id):
 
 @login_required
 def favorites(request):
-    tags = Tag.objects.all()
-    active_tags = (request.GET.getlist('tags') if
-                   request.GET.getlist('tags') else
-                   [tag.slug for tag in Tag.objects.all()])
+    active_tags = get_active_tags(request)
     recipes = Recipe.objects.filter(favorites__user=request.user,
                                     tags__slug__in=active_tags).distinct()
     paginator = Paginator(recipes, settings.RECIPES_PER_PAGE)
@@ -130,7 +125,7 @@ def favorites(request):
     return render(
         request,
         'index.html',
-        {'paginator': paginator, 'page': page, 'tags': tags}
+        {'paginator': paginator, 'page': page}
     )
 
 
@@ -138,16 +133,6 @@ def favorites(request):
 def purchases(request):
     purchases = request.user.purchases.all()
     return render(request, 'shop_list.html', {'purchases': purchases})
-
-
-def page_not_found(request, exception):
-    return render(
-        request, "misc/404.html", {"path": request.path}, status=404
-    )
-
-
-def server_error(request):
-    return render(request, "misc/500.html", status=500)
 
 
 @login_required

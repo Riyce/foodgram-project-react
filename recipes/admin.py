@@ -22,7 +22,7 @@ class RecipeAdmin(admin.ModelAdmin):
     search_fields = ('title', 'author')
 
     def tag_list(self, obj):
-        return ", ".join([tag.display_name for tag in obj.tags.all()])
+        return ', '.join([tag.display_name for tag in obj.tags.all()])
 
     def added(self, obj):
         return obj.favorites.all().count()

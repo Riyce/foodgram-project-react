@@ -4,7 +4,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 
-from .models import Purchase, RecipeIngredient
+from .models import Purchase, RecipeIngredient, Tag
 
 INGREDIENT_STRING = '{name} - {count}({unit})'
 
@@ -60,3 +60,8 @@ def create_pdf(ingredients):
     pdf = buffer.getvalue()
     buffer.close()
     return pdf
+
+
+def get_active_tags(request):
+    return (request.GET.getlist('tags') if request.GET.getlist('tags') else
+            Tag.objects.values_list('slug'))

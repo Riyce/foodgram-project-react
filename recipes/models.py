@@ -35,7 +35,7 @@ class Ingredient(models.Model):
 class Recipe(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.CASCADE,
-        verbose_name='Автор', related_name='recipies'
+        verbose_name='Автор', related_name='recipes'
     )
     title = models.CharField(verbose_name='Название', max_length=128)
     image = models.ImageField(verbose_name='Изображение', upload_to='recipes/')
@@ -87,8 +87,7 @@ class Follow(models.Model):
     class Meta:
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
-        unique_together = ('user', 'author')
-        ordering = ('user', 'author')
+        ordering = ['user', 'author']
         constraints = [
             models.UniqueConstraint(
                 fields=['user', 'author'], name='user_author')
@@ -114,8 +113,11 @@ class Favorite(models.Model):
     class Meta:
         verbose_name = 'Избранный рецепт'
         verbose_name_plural = 'Избранные рецепты'
-        unique_together = ['user', 'recipe']
         ordering = ['-created']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'recipe'], name='user_recipe')
+        ]
 
     def __str__(self):
         return f'{self.user} - {self.recipe}'

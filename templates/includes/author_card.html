@@ -4,7 +4,7 @@
     </div>
     <div class="card-user__body">
         <ul class="card-user__items">
-            {% for recipe in author.recipies.all %}
+            {% for recipe in author.recipes.all %}
             {% if forloop.counter < 4 %}
                 <li class="card-user__item">
                     <div class="recipe">
@@ -18,9 +18,9 @@
                 </li>
             {% endif %}
             {% endfor %}
-            {% if author.recipies.all.count > 3 %}
+            {% if author.recipes.all.count > 3 %}
                 <li class="card-user__item">
-                    <a href="#" class="card-user__link link">Еще {{author.recipies.all.count|add:-3}} ...</a>
+                    <a href="#" class="card-user__link link">Еще {{author.recipes.all.count|add:-3}} ...</a>
                 </li>
             {% endif %}
         </ul>

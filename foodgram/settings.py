@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 import environ
@@ -8,8 +7,7 @@ env = environ.Env(
     SECRET_KEY=(str, 'SECRET_KEY'),
     ALLOWED_HOSTS=(list, ['127.0.0.1', 'localhost']),
     DATABASE_DEFAULT=(str, 'sqlite:///db.sqlite3'),
-    GMAIL=(str, 'email'),
-    PASSWORD=(str, 'pass'),
+    EMAIL_URL=(str, 'consolemail://'),
 )
 environ.Env.read_env()
 
@@ -79,7 +77,7 @@ USE_L10N = True
 USE_TZ = True
 
 '''TEMPLATES'''
-TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+TEMPLATES_DIR = BASE_DIR.joinpath('templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -91,6 +89,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'recipes.context_processors.tags'
             ],
         },
     },
@@ -98,11 +97,11 @@ TEMPLATES = [
 
 '''STATIC'''
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATICFILES_DIRS = (BASE_DIR.joinpath('static'),)
 
 ''''MEDIA'''
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR.joinpath('media')
 
 LOGIN_URL = '/auth/login/'
 LOGIN_REDIRECT_URL = 'index'
@@ -119,11 +118,5 @@ REST_FRAMEWORK = {
     )
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = env('GMAIL')
-EMAIL_HOST_PASSWORD = env('PASSWORD')
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-DEFAULT_FROM_EMAIL = 'riyce.django.test@gmail.com'
+EMAIL_CONFIG = env.email_url('EMAIL_URL')
+vars().update(EMAIL_CONFIG)

@@ -1,7 +1,5 @@
-from django.contrib import auth
-from rest_framework import serializers
-
 from recipes.models import Favorite, Follow, Ingredient, Purchase
+from rest_framework import serializers
 
 
 class IngredientSerializer(serializers.ModelSerializer):
