@@ -6,9 +6,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import RecipeForm
 from .models import Follow, Ingredient, Recipe, RecipeIngredient, User
-from .utils import (
-    create_pdf, get_active_tags, get_ingredients, get_ingredients_from_shoplist
-)
+from .utils import (create_pdf, get_active_tags, get_ingredients,
+                    get_ingredients_from_shoplist)
 
 
 def index(request):

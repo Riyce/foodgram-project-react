@@ -1,10 +1,10 @@
 from django.shortcuts import get_object_or_404
-from recipes.models import Favorite, Follow, Ingredient, Purchase
 from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.response import Response
 
 from api.serializers import (FavoriteSerializer, FollowSerializer,
                              IngredientSerializer, PurchasesSerializer)
+from recipes.models import Favorite, Follow, Ingredient, Purchase
 
 
 class IngredientViewSet(viewsets.ModelViewSet):
