@@ -103,8 +103,8 @@ def delete_recipe(request, username, recipe_id):
 def recipe_page(request, username, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id, author__username=username)
     following = (
-        request.user.is_authenticated and
-        Follow.objects.filter(
+        request.user.is_authenticated
+        and Follow.objects.filter(
             user=request.user,
             author__username=username
         ).exists()
