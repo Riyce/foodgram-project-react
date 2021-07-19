@@ -16,7 +16,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-
 INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'recipes.apps.RecipesConfig',
@@ -48,7 +47,14 @@ ROOT_URLCONF = 'foodgram.urls'
 WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 DATABASES = {
-    'default': env.db('DATABASE_DEFAULT')
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -97,7 +103,7 @@ TEMPLATES = [
 
 '''STATIC'''
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (BASE_DIR.joinpath('static'),)
+STATIC_ROOT = BASE_DIR.joinpath('static')
 
 ''''MEDIA'''
 MEDIA_URL = '/media/'
