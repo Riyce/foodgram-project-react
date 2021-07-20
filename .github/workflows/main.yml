@@ -60,14 +60,7 @@ jobs:
             sudo docker pull teodorriyce/foodgram
             sudo docker-compose stop
             sudo docker-compose rm web
-            touch .env
-            echo DB_NAME=${{ secrets.DB_NAME }} >> .env
-            echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
-            echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
-            echo DB_HOST=${{ secrets.DB_HOST }} >> .env
-            echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             sudo docker-compose up -d 
-            sudo docker-compose exec -T web python touch foodgram/.env
             sudo docker-compose exec -T web python manage.py makemigrations recipes
             sudo docker-compose exec -T web python manage.py migrate --no-input
             sudo docker-compose exec -T web python manage.py collectstatic --no-input

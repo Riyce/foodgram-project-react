@@ -1,21 +1,12 @@
+import os
 from pathlib import Path
 
-import environ
-
-env = environ.Env(
-    DEBUG=(bool, True),
-    SECRET_KEY=(str, 'SECRET_KEY'),
-    ALLOWED_HOSTS=(list, ['*']),
-    DATABASE_DEFAULT=(str, 'sqlite:///db.sqlite3'),
-    EMAIL_URL=(str, 'consolemail://'),
-)
-environ.Env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = env('SECRET_KEY')
-DEBUG = env('DEBUG')
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+SECRET_KEY = 'django-insecure-m#x4xzasd1zvxjwj8vhwg_g8*41yl48y@9bh$#q3nstr=ct6l+'
+DEBUG = True
+ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
@@ -49,11 +40,11 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('POSTGRES_USER'),
-        'PASSWORD': env('POSTGRES_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
 
@@ -124,5 +115,8 @@ REST_FRAMEWORK = {
     )
 }
 
-EMAIL_CONFIG = env.email_url('EMAIL_URL')
-vars().update(EMAIL_CONFIG)
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
