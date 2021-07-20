@@ -5,7 +5,7 @@ import environ
 env = environ.Env(
     DEBUG=(bool, True),
     SECRET_KEY=(str, 'SECRET_KEY'),
-    ALLOWED_HOSTS=(list, ['127.0.0.1', 'localhost', '*']),
+    ALLOWED_HOSTS=(list, ['*']),
     DATABASE_DEFAULT=(str, 'sqlite:///db.sqlite3'),
     EMAIL_URL=(str, 'consolemail://'),
 )
@@ -17,9 +17,6 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 INSTALLED_APPS = [
-    'api.apps.ApiConfig',
-    'recipes.apps.RecipesConfig',
-    'users.apps.UsersConfig',
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django.contrib.admin',
@@ -28,6 +25,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api.apps.ApiConfig',
+    'recipes.apps.RecipesConfig',
+    'users.apps.UsersConfig',
     'rest_framework',
     'sorl.thumbnail',
 ]
