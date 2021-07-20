@@ -5,7 +5,7 @@ import environ
 env = environ.Env(
     DEBUG=(bool, True),
     SECRET_KEY=(str, 'SECRET_KEY'),
-    ALLOWED_HOSTS=(list, ['127.0.0.1', 'localhost']),
+    ALLOWED_HOSTS=(list, ['127.0.0.1', 'localhost', '*']),
     DATABASE_DEFAULT=(str, 'sqlite:///db.sqlite3'),
     EMAIL_URL=(str, 'consolemail://'),
 )
