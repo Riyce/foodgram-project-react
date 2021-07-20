@@ -57,7 +57,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           stack_file_name: docker-compose.yaml
           script: |
-            sudo docker teodorriyce/foodgram
+            sudo docker pull teodorriyce/foodgram
             sudo docker-compose stop
             sudo docker-compose rm web
             touch foodgram/.env
