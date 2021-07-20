@@ -1,4 +1,4 @@
-![foodgram-project](https://github.com/Riyce/foodgram-project-react/actions/workflows/main.yaml/badge.svg)
+![foodgram-project](https://github.com/Riyce/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 <hr>
 <hr>
 <h1> Foodgram </h1>
