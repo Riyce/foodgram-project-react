@@ -13,12 +13,12 @@ def get_ingredients(request):
     ingredients = {}
     for var in request:
         if var.startswith('nameIngredient'):
-            name = request[var]
+            ing = request[var]
             _, num = var.split('_')
-            if name in ingredients:
-                ingredients[name] += request.get('valueIngredient_' + num)
+            if ing in ingredients.keys():
+                ingredients[ing] += request.get('valueIngredient_' + num)
                 continue
-            ingredients[name] = request.get('valueIngredient_' + num)
+            ingredients[ing] = request.get('valueIngredient_' + num)
     return ingredients
 
 
