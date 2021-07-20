@@ -16,9 +16,9 @@ def get_ingredients(request):
             ing = request[var]
             _, num = var.split('_')
             if ing in ingredients.keys():
-                ingredients[ing] += request.get('valueIngredient_' + num)
+                ingredients[ing] += int(request.get('valueIngredient_' + num))
                 continue
-            ingredients[ing] = request.get('valueIngredient_' + num)
+            ingredients[ing] = int(request.get('valueIngredient_' + num))
     return ingredients
 
 
