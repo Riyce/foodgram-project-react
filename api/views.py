@@ -13,7 +13,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         part_of_name = self.request.query_params.get('query', '')
-        return Ingredient.objects.filter(name__contains=part_of_name)
+        return Ingredient.objects.filter(name__icontains=part_of_name)
 
 
 class CreateDestroyViewSet(mixins.CreateModelMixin,

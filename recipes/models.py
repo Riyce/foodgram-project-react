@@ -49,7 +49,7 @@ class Recipe(models.Model):
     tags = models.ManyToManyField(Tag, verbose_name='Теги')
 
     class Meta:
-        ordering = ['title']
+        ordering = ['-id']
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
 
@@ -137,5 +137,5 @@ class Purchase(models.Model):
                 fields=['user', 'recipe'], name='user_purchases')
         ]
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f'{self.user} - {self.recipe}'
