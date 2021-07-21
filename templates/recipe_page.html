@@ -65,7 +65,7 @@
                 </div>
                 <ul class="single-card__items">
                     {% if user.is_authenticated %}
-                        {% if not recipe|add_to_user_purchases:user %}
+                        {% if not following %}
                             <button class="button button_style_blue" name="purchases" data-out>
                                 <span class="icon-plus button__icon"></span> Добавить в покупки
                             </button>
