@@ -1,6 +1,5 @@
 from io import BytesIO
 
-from django.forms import ValidationError
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
