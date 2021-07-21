@@ -16,3 +16,8 @@ def get_purchases_count(user):
 @register.filter
 def add_to_user_purchases(recipe, user):
     return user.purchases.filter(recipe=recipe).exists()
+
+
+@register.filter
+def follow_by_user(author, user):
+    return bool(author in user.following.all())

@@ -49,7 +49,7 @@
                         <li class="single-card__item">
                             <p class="single-card__text">
                                 <span class="icon-user"></span>
-                                {{ recipe.author.get_full_name }}
+                                {{ recipe.author.username }}
                             </p>
                         </li>
                         {% if user == recipe.author %}
@@ -74,7 +74,7 @@
                                 <span class="icon-check button__icon"></span> Рецепт добавлен
                             </button>
                         {% endif %}
-                        {% if following %}
+                        {% if recipe.author|follow_by_user:user %}
                             <button class="button button_style_light-blue button_size_subscribe"
                                 name="subscribe">Отписаться от автора
                             </button>
