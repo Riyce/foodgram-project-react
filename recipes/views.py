@@ -34,10 +34,13 @@ def profile(request, username):
     paginator = Paginator(list, settings.RECIPES_PER_PAGE)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
+    following = (Follow.objects.filter(user=request.user,
+                                       author__username=username).exists())
     return render(
         request,
-        'index.html',
-        {'page': page, 'paginator': paginator, 'author': author}
+        'profile.html',
+        {'page': page, 'paginator': paginator,
+         'author': author, 'following': following}
     )
 
 
