@@ -1,5 +1,8 @@
 from django import template
 
+from recipes.models import Follow
+
+
 register = template.Library()
 
 
@@ -18,6 +21,6 @@ def add_to_user_purchases(recipe, user):
     return user.purchases.filter(recipe=recipe).exists()
 
 
-@register.filter
+@register.filter()
 def follow_by_user(author, user):
-    return bool(author in user.following.all())
+    return Follow.objects.filter(user=user, author=author).exists()
