@@ -18,7 +18,7 @@ def get_ingredients(request):
             _, num = var.split('_')
             ing_count = int(request.get('valueIngredient_' + num))
             if ing_count <= 0:
-                raise ValidationError('Количество не может быть отрицательным')
+                continue
             if ing in ingredients.keys():
                 ingredients[ing] += ing_count
                 continue
