@@ -71,10 +71,11 @@ def create_or_update_recipe(request, username=None, recipe_id=None):
     )
     if recipe and request.user != recipe.author:
         return redirect('recipe', recipe_id=recipe_id, username=username)
-    try:
-        ingredients = get_ingredients(request.POST)
-    except ValidationError as error:
-        form.errors.update({'error': error.message})
+    if request.method == 'POST':
+        try:
+            ingredients = get_ingredients(request.POST)
+        except ValidationError as error:
+            form.errors.update({'error': error.message})
     if form.is_valid():
         if recipe:
             recipe.recipe_ingredients.all().delete()
