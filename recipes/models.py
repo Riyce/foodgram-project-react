@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator
 from django.db import models
 
 User = get_user_model()
@@ -66,7 +67,10 @@ class RecipeIngredient(models.Model):
         Ingredient, on_delete=models.CASCADE, verbose_name='Ингредиент',
         related_name='ingredient_recipes',
     )
-    ingredient_count = models.PositiveIntegerField(verbose_name='Количество')
+    ingredient_count = models.DecimalField(
+        max_digits=6, verbose_name='Количество', decimal_places=1,
+        validators=[MinValueValidator(1)]
+    )
 
     class Meta:
         ordering = ['recipe']
