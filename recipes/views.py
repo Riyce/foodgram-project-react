@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -70,7 +71,11 @@ def create_or_update_recipe(request, username=None, recipe_id=None):
     )
     if recipe and request.user != recipe.author:
         return redirect('recipe', recipe_id=recipe_id, username=username)
-    ingredients = get_ingredients(request.POST)
+    try:
+        ingredients = get_ingredients(request.POST)
+    except ValidationError as error:
+        form.errors.update({'ingredient': error.message})
+        form.is_valid = False
     if form.is_valid():
         if recipe:
             recipe.recipe_ingredients.all().delete()
