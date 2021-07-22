@@ -74,8 +74,7 @@ def create_or_update_recipe(request, username=None, recipe_id=None):
     try:
         ingredients = get_ingredients(request.POST)
     except ValidationError as error:
-        form.errors.update({'ingredient': error.message})
-        form.is_valid = False
+        form._update_errors({'ingredient': error.message})
     if form.is_valid():
         if recipe:
             recipe.recipe_ingredients.all().delete()
