@@ -26,7 +26,7 @@ def get_ingredients(request):
                 continue
             ingredients[ing] = ing_count
     if not ingredients:
-        raise ValidationError('Вы ничего не добавили.')
+        raise ValidationError('Это поле не должно быть пустым.')
     return ingredients
 
 
