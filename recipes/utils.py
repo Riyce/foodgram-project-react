@@ -1,5 +1,6 @@
 from io import BytesIO
 
+from django.forms import ValidationError
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
@@ -15,11 +16,17 @@ def get_ingredients(request):
         if var.startswith('nameIngredient'):
             ing = request[var]
             _, num = var.split('_')
-            ing_count = abs(int(request.get('valueIngredient_' + num)))
+            ing_count = int(request.get('valueIngredient_' + num))
+            if ing_count <= 0:
+                raise ValidationError(
+                    'Значение не может быть меньше 0.'
+                )
             if ing in ingredients.keys():
                 ingredients[ing] += ing_count
                 continue
             ingredients[ing] = ing_count
+    if not ingredients:
+        raise ValidationError('Вы ничего не добавили.')
     return ingredients
 
 

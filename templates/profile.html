@@ -13,15 +13,7 @@
     {% if user.is_authenticated %}
         <div class="author-subscribe" data-author="{{ author.id }}">
             <p style="padding: 0 0 2em 0;">
-            {% if author|follow_by_user:user %}
-                <button class="button button_style_light-blue button_size_subscribe"
-                    name="subscribe">Отписаться от автора
-                </button>
-            {% else %}
-                <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>
-                    Подписаться на автора
-                </button>
-            {% endif %}
+            {% include './includes/sub_button.html' with user=user author=author %}
             </p>
         </div>
     {% endif %}
