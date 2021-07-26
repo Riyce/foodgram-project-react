@@ -35,13 +35,10 @@ def profile(request, username):
     paginator = Paginator(list, settings.RECIPES_PER_PAGE)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    following = (Follow.objects.filter(user=request.user,
-                                       author__username=username).exists())
     return render(
         request,
         'profile.html',
-        {'page': page, 'paginator': paginator,
-         'author': author, 'following': following}
+        {'page': page, 'paginator': paginator, 'author': author}
     )
 
 
@@ -110,15 +107,7 @@ def delete_recipe(request, username, recipe_id):
 
 def recipe_page(request, username, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id, author__username=username)
-    following = (
-        request.user.is_authenticated
-        and Follow.objects.filter(
-            user=request.user,
-            author__username=username
-        ).exists()
-    )
-    return render(request, 'recipe_page.html', {'recipe': recipe,
-                                                'following': following})
+    return render(request, 'recipe_page.html', {'recipe': recipe})
 
 
 @login_required
