@@ -1,12 +1,11 @@
 ![foodgram-project](https://github.com/Riyce/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 <hr>
-<hr>
 <h1> Foodgram </h1>
 Проект Foodgram предназначен для размещения рецептов.
 <hr>
 В данном репозитории представлен проект Foodgram с возможностью запуска в контейнеах Docker со всеми необходимыми зависимостями.
 <hr>
-Развернутый проект доступен по ссылке: http://selkieproject.tk/
+Развернутый проект доступен по ссылке: http://178.154.214.1/
 Тестовый пользователь: username - Testuser, password - t1e1s1t1U
 
 Создайте для проекта директорию:
