@@ -1,17 +1,19 @@
 {% load recipe_filters %}
-{% if user != author %}
-    {% if author|follow_by_user:user %}
-        <button class="button button_style_light-blue button_size_subscribe"
-            name="subscribe">
-            {% if request.resolver_match.url_name == 'follows' %}
-                Отписаться
-            {% else %}
-                Отписаться от автора
-            {% endif %}
-        </button>
-    {% else %}
-        <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>
-            Подписаться на автора
-        </button>
+{% if user.is_authenticated %}
+    {% if user != author %}
+        {% if author|follow_by_user:user %}
+            <button class="button button_style_light-blue button_size_subscribe"
+                name="subscribe">
+                {% if request.resolver_match.url_name == 'follows' %}
+                    Отписаться
+                {% else %}
+                    Отписаться от автора
+                {% endif %}
+            </button>
+        {% else %}
+            <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>
+                Подписаться на автора
+            </button>
+        {% endif %}
     {% endif %}
 {% endif %}
